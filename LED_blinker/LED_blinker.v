@@ -1,22 +1,14 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Shaayan Goswami
 // 
-// Create Date: 05/18/2026 03:51:59 PM
-// Design Name: 
+// Create Date: 05/18/2026
 // Module Name: LED_blinker
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
+// Project Name: FPGA Projects
+// Target Devices: Basys 3 Artix-7 (xc7a35tcpg236-1)
+// Description: Clock divider that blinks an LED at ~1Hz using a 
+//              27-bit counter on a 100MHz clock.
 //////////////////////////////////////////////////////////////////////////////////
 
 
