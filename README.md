@@ -44,8 +44,3 @@ executing a basic instruction set.
 - Vivado ML Standard Edition 2025.2
 - Basys 3 AMD Artix-7 FPGA Development Board
 - Verilog HDL
-
-## About
-Independent hardware design project completed Summer 2026, two years ahead of 
-the digital systems curriculum at UCF. Built to develop practical skills in 
-RTL design and digital systems ahead of internship recruiting.
