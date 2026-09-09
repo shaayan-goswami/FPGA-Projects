@@ -1,61 +1,51 @@
 # FPGA Projects
 
-Verilog designs built on a Basys 3 Artix-7 board over Summer 2026. Starts with a
-blinking LED and ends with a working CPU core.
+Verilog on a Basys 3 board, summer 2026. Started with a blinking LED, ended
+with a CPU that runs real instructions.
 
 ## Projects
 
 ### LED Blinker
-A 27-bit counter runs at 100 million ticks per second. Bit 26 flips roughly once
-per second, toggling an LED. The chip is not running code - it is the counter
-circuit. Every clock tick, the hardware adds 1 across thousands of logic blocks
-in parallel.
+27-bit counter, 100 million ticks a second, bit 26 flips about once a second
+and toggles an LED. First thing I flashed - the "hello world" of FPGAs.
 
 ### 4-Bit Adder
-Eight switches feed two 4-bit numbers into a combinational adder. The 5-bit sum
-appears on the LEDs instantly. No clock, no state, no delay. Flip a switch and
-the output updates. Same fundamental circuit that lives inside every ALU in every
-processor ever built.
+Two 4-bit numbers on switches, sum shows up on the LEDs instantly. No clock
+involved - flip a switch and the output just changes.
 
 ### 7-Segment Display Counter
-A 27-bit divider counts to 134 million before resetting, producing a 1Hz tick.
-Each tick increments a 4-bit digit from 0 to 9. A decoder converts that digit
-into 7 cathode signals that light the correct segments. All of it runs in
-hardware at once, not line by line.
+Counts 0-9 on the display, resets, repeats. Combines a clock divider with a
+decoder that maps digits to segment patterns.
 
 ### Button Debouncer
-A mechanical button press looks like 20-30 rapid toggles to an FPGA. This circuit
-filters that noise with a shift register and majority logic, producing one clean
-edge per press. Every real project that uses buttons needs this.
+A button press bounces 20-30 times before it settles. This filters that out
+so the FPGA sees one clean press instead of dozens.
 
 ### Traffic Light FSM
-Four states: red, green, yellow, red. Each state drives a different LED pattern.
-A pedestrian button forces an immediate jump to red. Same design pattern used in
-real traffic controllers, elevator logic, and serial protocols.
+Red, green, yellow, loop. A pedestrian button interrupts at any point and
+forces it back to red. First real state machine I built.
 
 ### UART Transmitter
-Transmits one bit at a time at a fixed baud rate: start bit, 8 data bits, stop
-bit. A PC terminal receives the signal over USB and displays ASCII characters.
-The timing of each bit is controlled by a clock divider. This is how hardware
-has talked to computers for decades.
+Sends text to a PC over serial, one bit at a time at a fixed rate.
 
-### ALU
-Two 4-bit operands go in, one result comes out, based on the selected operation:
-add, subtract, AND, OR, XOR, or shift. Scale this to 64 bits with pipelining
-and forwarding and you have the execution unit of a modern processor.
+### ALU with Hex Display
+Add, subtract, AND, OR, XOR, shift - picked with switches, result shown in
+hex on two digits. Tested unsigned subtraction underflow specifically:
+2 - 5 wraps to 0x1D instead of going negative, confirmed on hardware.
 
 ### VGA Signal Generator
-Two counters track horizontal and vertical position across a 640x480 grid.
-Sync pulses fire at precise intervals to tell the monitor when each row and
-frame starts. Color data goes onto the RGB lines during the active window.
-The monitor sees a valid VGA signal and has no idea it is talking to an FPGA.
+Generates the timing signals for a 640x480 display from scratch - syncs,
+color data, all of it, built to spec for 640x480@60Hz.
 
 ### Capstone - RISC-V CPU Core
-Fetches 32-bit instructions from memory, decodes the opcode, executes in the
-ALU, writes results back to a register file. The program counter steps forward
-each cycle. Branch instructions redirect it. Load and store instructions move
-data between registers and memory. Every stage is hardware described in Verilog,
-running on the same chip as the LED blinker from week one.
+Six modules - register file, ALU, decoder, immediate generator, PC/instruction
+memory, data memory - wired into a single-cycle RV32I core decoding all six
+RISC-V instruction formats.
+
+Wrote a test program by hand (add two numbers, subtract them, loop) and ran
+it - passed in simulation, then flashed it to the board and read the actual
+register values off the LEDs. x3 came out to 15, x4 came out to 5, matching
+the simulator exactly.
 
 ## Tools
 - Vivado ML Standard Edition 2025.2
@@ -63,4 +53,5 @@ running on the same chip as the LED blinker from week one.
 - Verilog HDL
 
 ## About
-Independent hardware design project, Summer 2026. Built to develop practical RTL design skills.
+Summer 2026, done on my own time. Wanted real RTL experience before internship
+season and before this shows up in my actual coursework.
